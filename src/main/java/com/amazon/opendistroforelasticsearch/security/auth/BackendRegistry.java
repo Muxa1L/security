@@ -33,6 +33,7 @@ package com.amazon.opendistroforelasticsearch.security.auth;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.URLDecoder;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -492,7 +493,7 @@ public class BackendRegistry {
                 return false;
             }
 
-            final String tenant = Utils.coalesce(request.header("securitytenant"), request.header("security_tenant"));
+            final String tenant = URLDecoder.decode(Utils.coalesce(request.header("securitytenant"), request.header("security_tenant")));
 
             if (isDebugEnabled) {
                 log.debug("Rest user '{}' is authenticated", authenticatedUser);
