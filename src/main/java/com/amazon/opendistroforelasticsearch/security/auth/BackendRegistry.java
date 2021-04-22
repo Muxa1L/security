@@ -493,7 +493,9 @@ public class BackendRegistry {
                 return false;
             }
 
-            final String tenant = URLDecoder.decode(Utils.coalesce(request.header("securitytenant"), request.header("security_tenant")));
+            String tenant = Utils.coalesce(request.header("securitytenant"), request.header("security_tenant"));
+            if (tenant != null)
+                tenant = URLDecoder.decode(tenant);
 
             if (isDebugEnabled) {
                 log.debug("Rest user '{}' is authenticated", authenticatedUser);
