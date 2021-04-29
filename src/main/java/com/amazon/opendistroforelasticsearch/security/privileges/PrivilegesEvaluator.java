@@ -309,7 +309,11 @@ public class PrivilegesEvaluator {
                     }
 
                     if (dnfofEnabled
-                            && (action0.startsWith("indices:data/read/"))
+                            && (
+                                (action0.startsWith("indices:data/read/"))||
+                                (action0.startsWith("indices:admin/resolve/index"))||
+                                (action0.startsWith("indices:monitor/"))
+                            )
                             && !requestedResolved.getAllIndices().isEmpty()
                             ) {
 
@@ -389,7 +393,9 @@ public class PrivilegesEvaluator {
         if (dnfofEnabled
                 && (action0.startsWith("indices:data/read/")
                 || action0.startsWith("indices:admin/mappings/fields/get")
-                || action0.equals("indices:admin/shards/search_shards"))) {
+                || action0.equals("indices:admin/shards/search_shards")
+                || action0.startsWith("indices:admin/resolve/index")
+                || action0.startsWith("indices:monitor/"))) {
 
             if(requestedResolved.getAllIndices().isEmpty()) {
                 presponse.missingPrivileges.clear();
